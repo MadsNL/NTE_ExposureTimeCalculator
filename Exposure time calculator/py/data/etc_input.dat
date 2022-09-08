@@ -1,0 +1,12 @@
+1200.              #;# Exposure time in s
+P1.10              #;# Template {P|B|T}{Index|T in K|FWHM in A}
+20.5              #;# AB magnitude of object
+16000.             #;# Wavelength (in A) where AB mag is given
+3000.              #;# Lower limit wavelength in A
+18000.             #;# Upper limit wavelength in A
+1.0                #;# Slit width in arcsec
+0.7                #;# FWHM of (Gaussian) seeing in arcsec
+1                  #;# Detector binning in dispersion direction
+1                  #;# Detector binning in spatial direction
+1                  #;# Post-detector binning of signal-to-noise
+4                  #;# Number of exposures used to calculate S/N
