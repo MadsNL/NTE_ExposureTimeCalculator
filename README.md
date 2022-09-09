@@ -15,4 +15,5 @@ At this current moment there are 12 inputs to the calculator:
 * Detector binning in spatial direction
 * Post-detector binning of signal-to-noise
 * Number of exposures used to calculate S/N
+
 All of these should be given on a separate line in a file named 'etc\_input.dat' in a folder named 'data', located in the same folder as the 'nte\_etc.py' file. 'nte\_etc.py' is then the file that you run.
