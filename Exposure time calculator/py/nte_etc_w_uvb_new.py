@@ -409,10 +409,10 @@ def read_luvb_tmp (): # TODO vi bruger ikke dens interpolation til noget???????
     - luvb_y - extinction
     """
     global luvb_x, luvb_y, luvb_y2
-    luvb_data = np.loadtxt('data/LUVB-ext.dat') #2.dat')
+    luvb_data = np.loadtxt('data/UVIS-ext.dat') #np.loadtxt('data/LUVB-ext.dat') #2.dat')
     # extract wavelength (in um) and transmission of the atmosphere.
-    luvb_x = luvb_data[:,0]
-    luvb_y = luvb_data[:,1] #10.0**(-0.4 * luvb_data[:,1])
+    luvb_x = luvb_data[:,0]/1000
+    luvb_y = 10.0**(-0.4 * luvb_data[:,1]) #luvb_data[:,1] 
     # optain the second derivative of the interpolating function.
     # y_spl_luvb = UnivariateSpline(luvb_x, luvb_y, s=0, k=2)
     # y_spl_2d = y_spl_luvb.derivative(n=2)
@@ -638,7 +638,7 @@ def skyem_at_vis_ir_and_uvb (type, sigma, lambd):
         # photon fluxes of the transmitted OH lines
         oh_flux = dqes_and_intps('nir', oh_x, 'trans_at_nir')**am * oh_y
     elif type == 'uvb':
-        step = 0.0000025
+        step = 0.0000030 # TODO  0.0000025?
     y = lambd.copy()
     # convolve the sky spectrum with a Gaussian
     for i in range(len(lambd)):
@@ -852,8 +852,10 @@ if __name__ == '__main__':
     DiskScale  = 0.05
 
     # Now we get the wavelength ranges for the individual arms
-    Range_UVB	= np.array([0.3, 0.55])
-    Range_VIS = np.array([0.45, 1.05])
+    # Range_UVB	= np.array([0.3, 0.55])
+    # Range_VIS = np.array([0.45, 1.05])
+    Range_UVB = np.array([0.3, 0.301])
+    Range_VIS = np.array([0.3, 1.05])
     Range_IR = np.array([0.95, 1.80])
     #Range_VIS = np.array([0.32, 0.76])
 
