@@ -854,9 +854,9 @@ if __name__ == '__main__':
     # Now we get the wavelength ranges for the individual arms
     # Range_UVB	= np.array([0.3, 0.55])
     # Range_VIS = np.array([0.45, 1.05])
-    Range_UVB = np.array([0.3, 0.301])
-    Range_VIS = np.array([0.3, 1.05])
-    Range_IR = np.array([0.95, 1.80])
+    Range_UVB = np.array([0.3, 0.3001])
+    Range_VIS = np.array([0.3001, 1.8])
+    Range_IR = np.array([1.80, 1.801])
     #Range_VIS = np.array([0.32, 0.76])
 
     Cov_UVB	= [max(LambdaMin, Range_UVB[0]), min(LambdaMax, Range_UVB[1])]
@@ -1031,6 +1031,7 @@ if __name__ == '__main__':
     if ( Cov_UVB[0] < Cov_UVB[1] ):
         plt.plot(lam_UVB,  sim_UVB, lw=1, color='k')
 
+    plt.show()
     plt.savefig('Simulated-Spectrum.eps')
 
 

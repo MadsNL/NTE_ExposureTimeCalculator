@@ -645,7 +645,7 @@ if __name__ == '__main__':
         plt.plot(lam_IR,  sim_IR, lw=1, color='k')
 
     plt.savefig('Simulated-Spectrum.eps')
-
+    plt.show()
 
 
 
