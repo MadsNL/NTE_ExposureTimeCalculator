@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module nte_etc_w_uvb_new</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>nte_etc_w_uvb_new</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/mads/Dropbox/ExpTimeCalc/Exposure%20time%20calculator/py/nte_etc_w_uvb_new.py">/home/mads/Dropbox/ExpTimeCalc/Exposure time calculator/py/nte_etc_w_uvb_new.py</a></font></td></tr></table>
+    <p><tt>Original&nbsp;code&nbsp;was&nbsp;written&nbsp;by&nbsp;Bjarne&nbsp;Thomsen.<br>
+&nbsp;<br>
+Translated&nbsp;and&nbsp;additional&nbsp;code&nbsp;written&nbsp;by&nbsp;Cecilie&nbsp;Valet&nbsp;Henneberg&nbsp;and&nbsp;Mads&nbsp;Nymann-Lynggaard<br>
+&nbsp;<br>
+Comments&nbsp;also&nbsp;written&nbsp;by&nbsp;Bjarne&nbsp;Thomsen.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="pandas.html">pandas</a><br>
+</td><td width="25%" valign=top><a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-asinh"><strong>asinh</strong></a>(x)</dt><dd><tt>Calculates&nbsp;the&nbsp;inverse&nbsp;of&nbsp;the&nbsp;hyperbolic&nbsp;sine&nbsp;function.<br>
+<a href="#-asinh">asinh</a>(x)&nbsp;=&nbsp;sign(x)*<a href="#-asinh">asinh</a>(abs(x))<br>
+<a href="#-asinh">asinh</a>(x)&nbsp;=&nbsp;alog(sqrt(1&nbsp;+&nbsp;x^2)&nbsp;+&nbsp;x)<br>
+&nbsp;<br>
+:param&nbsp;x:&nbsp;Real&nbsp;scalar&nbsp;or&nbsp;array.<br>
+:return:&nbsp;Inverse&nbsp;of&nbsp;the&nbsp;hyperbolic&nbsp;sine&nbsp;function.</tt></dd></dl>
+ <dl><dt><a name="-atmos_trans"><strong>atmos_trans</strong></a>(lambd)</dt><dd><tt>Calculates&nbsp;the&nbsp;atmospheric&nbsp;transmission&nbsp;at&nbsp;any<br>
+wavelength&nbsp;in&nbsp;the&nbsp;full&nbsp;range.<br>
+An&nbsp;airmass&nbsp;of&nbsp;1.0&nbsp;is&nbsp;assumed.<br>
+&nbsp;<br>
+:param&nbsp;lambd:&nbsp;Wavelength&nbsp;in&nbsp;um.<br>
+:return:&nbsp;Atmospheric&nbsp;transmission.</tt></dd></dl>
+ <dl><dt><a name="-call_func"><strong>call_func</strong></a>(func, abmag, maglam, param, x)</dt><dd><tt>Decides&nbsp;which&nbsp;function&nbsp;to&nbsp;use&nbsp;based&nbsp;on&nbsp;func&nbsp;string.<br>
+&nbsp;<br>
+:param&nbsp;func:&nbsp;String&nbsp;with&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;function&nbsp;to&nbsp;use.<br>
+:param&nbsp;abmag:&nbsp;AB&nbsp;magnitude&nbsp;at&nbsp;specified&nbsp;wavelength<br>
+:param&nbsp;maglam:&nbsp;Wavelength&nbsp;(in&nbsp;um)&nbsp;where&nbsp;abmag&nbsp;is&nbsp;given.<br>
+:param&nbsp;param:&nbsp;Spectral&nbsp;index,&nbsp;temperature&nbsp;or&nbsp;bandwidth.<br>
+:param&nbsp;x:&nbsp;The&nbsp;wavelengths&nbsp;given&nbsp;in&nbsp;um.<br>
+:return:&nbsp;Specific&nbsp;photon&nbsp;flux&nbsp;at&nbsp;x&nbsp;given&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;units&nbsp;photons/s/m^2/um.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Based&nbsp;on&nbsp;specified&nbsp;function.</tt></dd></dl>
+ <dl><dt><a name="-disp_at_vis_ir_and_uvb"><strong>disp_at_vis_ir_and_uvb</strong></a>(type, x)</dt><dd><tt>Calculates&nbsp;the&nbsp;spectral&nbsp;dispersion&nbsp;in&nbsp;arcsec/um<br>
+at&nbsp;any&nbsp;given&nbsp;wavelength&nbsp;for&nbsp;any&nbsp;arm.<br>
+&nbsp;<br>
+:param&nbsp;type:&nbsp;Which&nbsp;part&nbsp;of&nbsp;the&nbsp;spectrum&nbsp;is&nbsp;used<br>
+:param&nbsp;x:&nbsp;The&nbsp;wavelength&nbsp;in&nbsp;um<br>
+:return:&nbsp;The&nbsp;dispersion&nbsp;in&nbsp;arcsec/um</tt></dd></dl>
+ <dl><dt><a name="-dqes_and_intps"><strong>dqes_and_intps</strong></a>(name, lambd, t)</dt><dd><tt>Collective&nbsp;function&nbsp;for&nbsp;evaluation&nbsp;the&nbsp;interpolation.<br>
+&nbsp;<br>
+:param&nbsp;name:&nbsp;What&nbsp;part&nbsp;of&nbsp;the&nbsp;spectrum&nbsp;is&nbsp;used.<br>
+:param&nbsp;lambd:&nbsp;The&nbsp;given&nbsp;wavelength&nbsp;range&nbsp;in&nbsp;um.<br>
+:param&nbsp;t:&nbsp;The&nbsp;type&nbsp;of&nbsp;interpolation.&nbsp;(Needed&nbsp;because&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;processing&nbsp;might&nbsp;be&nbsp;needed&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specific&nbsp;interpolations)<br>
+:return:&nbsp;The&nbsp;interpolated&nbsp;values&nbsp;at&nbsp;lambd.</tt></dd></dl>
+ <dl><dt><a name="-gauss"><strong>gauss</strong></a>(x)</dt><dd><tt>Caclulate&nbsp;the&nbsp;normalized&nbsp;Gaussian&nbsp;function&nbsp;for&nbsp;the&nbsp;array&nbsp;x.<br>
+&nbsp;<br>
+:param&nbsp;x:&nbsp;array&nbsp;of&nbsp;values.&nbsp;In&nbsp;this&nbsp;code&nbsp;x&nbsp;is&nbsp;used&nbsp;as&nbsp;(arr&nbsp;-&nbsp;arr0)/sigma)<br>
+:return:&nbsp;The&nbsp;values&nbsp;of&nbsp;the&nbsp;Gaussian.</tt></dd></dl>
+ <dl><dt><a name="-hgauss"><strong>hgauss</strong></a>(x, s)</dt><dd><tt>Generates&nbsp;a&nbsp;semi-realistic&nbsp;object&nbsp;profile&nbsp;along&nbsp;the&nbsp;slit.<br>
+<a href="#-hgauss">hgauss</a>(x,&nbsp;s)&nbsp;=&nbsp;exp(-(sqrt(1&nbsp;+&nbsp;(x*s)^2)&nbsp;-&nbsp;1)/x^2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;exp(-2.0*(sinh(0.5*<a href="#-asinh">asinh</a>(x*s))/x)^2)<br>
+This&nbsp;is&nbsp;a&nbsp;simple&nbsp;way&nbsp;to&nbsp;obtain&nbsp;a&nbsp;profile&nbsp;resembling&nbsp;a&nbsp;disk&nbsp;galaxy<br>
+convolved&nbsp;by&nbsp;a&nbsp;Gaussian&nbsp;seeing.<br>
+&nbsp;<br>
+:param&nbsp;x:&nbsp;Exponential&nbsp;scale&nbsp;divided&nbsp;by&nbsp;Gaussian&nbsp;sigma.<br>
+:param&nbsp;s:&nbsp;Distance&nbsp;from&nbsp;center&nbsp;of&nbsp;slit&nbsp;in&nbsp;sigma&nbsp;units.<br>
+:return:&nbsp;Signal&nbsp;profile&nbsp;along&nbsp;the&nbsp;slit.</tt></dd></dl>
+ <dl><dt><a name="-init_snc_at_vis_ir_and_uvb"><strong>init_snc_at_vis_ir_and_uvb</strong></a>(type, slit_width, disk_scale, psf_fwhm, bin_w=0, bin_l=0)</dt><dd><tt>Decides&nbsp;which&nbsp;data&nbsp;to&nbsp;read&nbsp;give&nbsp;the&nbsp;type<br>
+&nbsp;<br>
+:param&nbsp;type:&nbsp;Which&nbsp;part&nbsp;of&nbsp;the&nbsp;spectrum&nbsp;is&nbsp;used<br>
+:param&nbsp;slit_width:&nbsp;The&nbsp;width&nbsp;of&nbsp;the&nbsp;slit&nbsp;in&nbsp;arcsec<br>
+:param&nbsp;disk_scale:&nbsp;The&nbsp;exponential&nbsp;scale&nbsp;of&nbsp;the&nbsp;disk&nbsp;in&nbsp;arcsec<br>
+:param&nbsp;psf_fwhm:&nbsp;The&nbsp;FWHM&nbsp;of&nbsp;the&nbsp;Gaussian&nbsp;PSF&nbsp;in&nbsp;arcsec<br>
+&nbsp;<br>
+No&nbsp;output.&nbsp;It&nbsp;just&nbsp;reads&nbsp;data&nbsp;into&nbsp;the&nbsp;globals.<br>
+Also&nbsp;depending&nbsp;on&nbsp;:param&nbsp;type:&nbsp;it&nbsp;will&nbsp;read&nbsp;different<br>
+constants&nbsp;into&nbsp;the&nbsp;globals.</tt></dd></dl>
+ <dl><dt><a name="-lamgen_at_vis_ir_and_uvb"><strong>lamgen_at_vis_ir_and_uvb</strong></a>(type, lambda_min, lambda_max)</dt><dd><tt>Generates&nbsp;an&nbsp;array&nbsp;of&nbsp;wavelengths.<br>
+&nbsp;<br>
+:param&nbsp;type:&nbsp;Which&nbsp;part&nbsp;of&nbsp;the&nbsp;spectrum&nbsp;is&nbsp;used<br>
+:param&nbsp;lambda_min:&nbsp;The&nbsp;minimum&nbsp;wavelength&nbsp;in&nbsp;um<br>
+:param&nbsp;lambda_max:&nbsp;The&nbsp;maximum&nbsp;wavelength&nbsp;in&nbsp;um<br>
+:return:&nbsp;An&nbsp;array&nbsp;of&nbsp;wavelengths&nbsp;in&nbsp;um.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wavelength&nbsp;array&nbsp;is&nbsp;on&nbsp;a&nbsp;logarithmix&nbsp;scale.</tt></dd></dl>
+ <dl><dt><a name="-objem_at_all"><strong>objem_at_all</strong></a>(func, abmag, maglam, param, sigma, lambd)</dt><dd><tt>Calculates&nbsp;the&nbsp;specific&nbsp;photon&nbsp;flux&nbsp;from&nbsp;a&nbsp;selected<br>
+spectral&nbsp;law&nbsp;or&nbsp;template&nbsp;at&nbsp;a&nbsp;given&nbsp;wavelength&nbsp;with<br>
+given&nbsp;spectral&nbsp;resolution,&nbsp;as&nbsp;specified&nbsp;by&nbsp;a&nbsp;<br>
+Gaussian&nbsp;sigma.&nbsp;And&nbsp;airmass&nbsp;of&nbsp;1.2&nbsp;is&nbsp;assumed.<br>
+&nbsp;<br>
+:param&nbsp;func:&nbsp;String.&nbsp;The&nbsp;spectral&nbsp;law&nbsp;or&nbsp;template&nbsp;to&nbsp;use.<br>
+:param&nbsp;abmag:&nbsp;AB&nbsp;magnitude&nbsp;at&nbsp;specified&nbsp;wavelength<br>
+:param&nbsp;maglam:&nbsp;Wavelength&nbsp;(in&nbsp;um)&nbsp;where&nbsp;abmag&nbsp;is&nbsp;given.<br>
+:param&nbsp;param:&nbsp;Spectral&nbsp;index,&nbsp;temperature&nbsp;or&nbsp;bandwidth.<br>
+:param&nbsp;sigma:&nbsp;The&nbsp;sky&nbsp;spectrum,&nbsp;as&nbsp;transmitted&nbsp;through<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;atmosphere,&nbsp;is&nbsp;convolved&nbsp;with&nbsp;a&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gaussian&nbsp;having&nbsp;the&nbsp;dispersion&nbsp;sigma[i]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;lambda[i].&nbsp;The&nbsp;sigmas&nbsp;are&nbsp;given&nbsp;in&nbsp;um.<br>
+:param&nbsp;lambd:&nbsp;The&nbsp;wavelengths&nbsp;given&nbsp;in&nbsp;um.<br>
+:return:&nbsp;Specific&nbsp;photon&nbsp;flux&nbsp;at&nbsp;lambd&nbsp;given&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;units&nbsp;photons/s/m^2/um.</tt></dd></dl>
+ <dl><dt><a name="-planck"><strong>planck</strong></a>(x, T)</dt><dd><tt>Calculates&nbsp;the&nbsp;specific&nbsp;photon&nbsp;flux&nbsp;from<br>
+a&nbsp;black&nbsp;body&nbsp;of&nbsp;themperature&nbsp;T&nbsp;kelvin.<br>
+It&nbsp;is&nbsp;given&nbsp;in&nbsp;ph/s/m^2/um/arcsec^2<br>
+&nbsp;<br>
+:param&nbsp;x:&nbsp;The&nbsp;given&nbsp;wavelengths&nbsp;in&nbsp;um<br>
+:param&nbsp;T:&nbsp;Temperature&nbsp;in&nbsp;kelvin<br>
+:return:&nbsp;Specific&nbsp;photon&nbsp;flux&nbsp;at&nbsp;x</tt></dd></dl>
+ <dl><dt><a name="-plancklaw"><strong>plancklaw</strong></a>(abmag, maglam, T, lambd)</dt><dd><tt>Calculates&nbsp;a&nbsp;Planck-law&nbsp;continuum&nbsp;with&nbsp;temperature&nbsp;T,<br>
+and&nbsp;an&nbsp;AB&nbsp;magnitude,&nbsp;abmag,&nbsp;at&nbsp;maglam.<br>
+The&nbsp;photon&nbsp;flux&nbsp;density&nbsp;is&nbsp;given&nbsp;in&nbsp;ph/s/m^2/um.<br>
+&nbsp;<br>
+:param&nbsp;abmag:&nbsp;AB&nbsp;magnitude&nbsp;at&nbsp;specified&nbsp;wavelength<br>
+:param&nbsp;maglam:&nbsp;Wavelength&nbsp;(in&nbsp;um)&nbsp;where&nbsp;abmag&nbsp;is&nbsp;given.<br>
+:param&nbsp;T:&nbsp;Temperature&nbsp;in&nbsp;kelvin<br>
+:param&nbsp;lambd:&nbsp;The&nbsp;wavelengths&nbsp;given&nbsp;in&nbsp;um.<br>
+:return:&nbsp;Specific&nbsp;photon&nbsp;flux&nbsp;at&nbsp;lambd&nbsp;given&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;units&nbsp;photons/s/m^2/um.</tt></dd></dl>
+ <dl><dt><a name="-powerlaw"><strong>powerlaw</strong></a>(abmag, maglam, alpha, lambd)</dt><dd><tt>Calculates&nbsp;a&nbsp;power-law&nbsp;continuum&nbsp;with&nbsp;a&nbsp;spectral<br>
+index,&nbsp;alpha&nbsp;and&nbsp;an&nbsp;AB&nbsp;magnitude,&nbsp;abmag,&nbsp;at&nbsp;maglam.<br>
+The&nbsp;photon&nbsp;flux&nbsp;density&nbsp;is&nbsp;given&nbsp;in&nbsp;photons/s/m^2/um.<br>
+&nbsp;<br>
+:param&nbsp;abmag:&nbsp;AB&nbsp;magnitude&nbsp;at&nbsp;specified&nbsp;wavelength<br>
+:param&nbsp;maglam:&nbsp;Wavelength&nbsp;(in&nbsp;um)&nbsp;where&nbsp;abmag&nbsp;is&nbsp;given.<br>
+:param&nbsp;alpha:&nbsp;Spectral&nbsp;index&nbsp;(F_nu&nbsp;~&nbsp;1/nu^alpha).<br>
+:param&nbsp;lambd:&nbsp;The&nbsp;wavelengths&nbsp;given&nbsp;in&nbsp;um.<br>
+:return:&nbsp;Specific&nbsp;photon&nbsp;flux&nbsp;at&nbsp;lambd&nbsp;given&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;units&nbsp;photons/s/m^2/um.</tt></dd></dl>
+ <dl><dt><a name="-read_ir_dqe"><strong>read_ir_dqe</strong></a>()</dt><dd><tt>Reads&nbsp;efficiency&nbsp;of&nbsp;NTE&nbsp;in&nbsp;IR.<br>
+&nbsp;<br>
+No&nbsp;input&nbsp;and&nbsp;no&nbsp;output.<br>
+It&nbsp;puts&nbsp;the&nbsp;data&nbsp;in&nbsp;the&nbsp;global&nbsp;variables:<br>
+-&nbsp;ir_x&nbsp;-&nbsp;wavelengths&nbsp;in&nbsp;um<br>
+-&nbsp;ir_y&nbsp;-&nbsp;efficiency</tt></dd></dl>
+ <dl><dt><a name="-read_luvb_tmp"><strong>read_luvb_tmp</strong></a>()</dt><dd><tt>Reads&nbsp;uvb&nbsp;extinction&nbsp;data.<br>
+&nbsp;<br>
+No&nbsp;input&nbsp;and&nbsp;no&nbsp;output.<br>
+It&nbsp;puts&nbsp;the&nbsp;data&nbsp;in&nbsp;the&nbsp;global&nbsp;variables:<br>
+-&nbsp;luvb_x&nbsp;-&nbsp;wavelengths&nbsp;in&nbsp;um<br>
+-&nbsp;luvb_y&nbsp;-&nbsp;extinction</tt></dd></dl>
+ <dl><dt><a name="-read_nir_abs"><strong>read_nir_abs</strong></a>()</dt><dd><tt>Reads&nbsp;data&nbsp;on&nbsp;atmospheric&nbsp;NIR&nbsp;absorption.<br>
+&nbsp;<br>
+No&nbsp;input&nbsp;and&nbsp;no&nbsp;output.<br>
+It&nbsp;puts&nbsp;the&nbsp;data&nbsp;in&nbsp;the&nbsp;global&nbsp;variables:<br>
+-&nbsp;nir_x&nbsp;-&nbsp;wavelengths&nbsp;in&nbsp;um<br>
+-&nbsp;nir_y&nbsp;-&nbsp;transmission</tt></dd></dl>
+ <dl><dt><a name="-read_oh"><strong>read_oh</strong></a>()</dt><dd><tt>Reads&nbsp;data&nbsp;on&nbsp;OH&nbsp;lines.<br>
+&nbsp;<br>
+No&nbsp;input&nbsp;and&nbsp;no&nbsp;output.<br>
+It&nbsp;puts&nbsp;the&nbsp;data&nbsp;in&nbsp;the&nbsp;global&nbsp;variables:<br>
+-&nbsp;oh_x&nbsp;-&nbsp;wavelengths&nbsp;in&nbsp;um<br>
+-&nbsp;oh_y&nbsp;-&nbsp;line&nbsp;strengths&nbsp;in&nbsp;ph/m^2/s/arcsec^2</tt></dd></dl>
+ <dl><dt><a name="-read_uvb_dqe"><strong>read_uvb_dqe</strong></a>()</dt><dd><tt>Reads&nbsp;NTE&nbsp;efficiency&nbsp;in&nbsp;uvb&nbsp;range.<br>
+&nbsp;<br>
+No&nbsp;input&nbsp;and&nbsp;no&nbsp;output.<br>
+It&nbsp;puts&nbsp;the&nbsp;data&nbsp;in&nbsp;the&nbsp;global&nbsp;variables:<br>
+-&nbsp;uvb_x&nbsp;-&nbsp;wavelengths&nbsp;in&nbsp;um<br>
+-&nbsp;uvb_y&nbsp;-&nbsp;efficiency</tt></dd></dl>
+ <dl><dt><a name="-read_uvb_sky"><strong>read_uvb_sky</strong></a>()</dt><dd><tt>Reads&nbsp;data&nbsp;on&nbsp;uvb&nbsp;night-sky&nbsp;emissions.<br>
+&nbsp;<br>
+No&nbsp;input&nbsp;and&nbsp;no&nbsp;output.<br>
+It&nbsp;puts&nbsp;the&nbsp;data&nbsp;in&nbsp;the&nbsp;global&nbsp;variables:<br>
+-&nbsp;uvbsky_x&nbsp;-&nbsp;wavelengths&nbsp;in&nbsp;um<br>
+-&nbsp;uvbsky_y&nbsp;-&nbsp;photon&nbsp;fluxes&nbsp;in&nbsp;ph/m^2/s/um/arcsec^2</tt></dd></dl>
+ <dl><dt><a name="-read_uvis_ext"><strong>read_uvis_ext</strong></a>()</dt><dd><tt>Reads&nbsp;data&nbsp;on&nbsp;atmospheric&nbsp;UV/Vis&nbsp;extinction.<br>
+&nbsp;<br>
+No&nbsp;input&nbsp;and&nbsp;no&nbsp;output.<br>
+It&nbsp;puts&nbsp;the&nbsp;data&nbsp;in&nbsp;the&nbsp;global&nbsp;variables:<br>
+-&nbsp;uvis_x&nbsp;-&nbsp;wavelengths&nbsp;in&nbsp;um<br>
+-&nbsp;uvis_y&nbsp;-&nbsp;transmissions</tt></dd></dl>
+ <dl><dt><a name="-read_vis_dqe"><strong>read_vis_dqe</strong></a>()</dt><dd><tt>Reads&nbsp;data&nbsp;on&nbsp;efficiency&nbsp;of&nbsp;NTE&nbsp;in&nbsp;VIS.<br>
+&nbsp;<br>
+No&nbsp;input&nbsp;and&nbsp;no&nbsp;output.<br>
+It&nbsp;puts&nbsp;the&nbsp;data&nbsp;in&nbsp;the&nbsp;global&nbsp;variables:<br>
+-&nbsp;vis_x&nbsp;-&nbsp;wavelengths&nbsp;in&nbsp;um<br>
+-&nbsp;vis_y&nbsp;-&nbsp;efficiency</tt></dd></dl>
+ <dl><dt><a name="-read_vis_sky"><strong>read_vis_sky</strong></a>()</dt><dd><tt>This&nbsp;function&nbsp;imports&nbsp;the&nbsp;needed&nbsp;data&nbsp;of&nbsp;the&nbsp;night-sky<br>
+in&nbsp;the&nbsp;visual&nbsp;part&nbsp;of&nbsp;the&nbsp;spectrum.<br>
+&nbsp;<br>
+No&nbsp;input&nbsp;and&nbsp;no&nbsp;output.<br>
+It&nbsp;puts&nbsp;the&nbsp;data&nbsp;in&nbsp;the&nbsp;global&nbsp;variables:<br>
+-&nbsp;vissky_x&nbsp;-&nbsp;wavelengths&nbsp;in&nbsp;um<br>
+-&nbsp;vissky_y&nbsp;-&nbsp;specific&nbsp;photon&nbsp;flux&nbsp;in&nbsp;photons/s/m^2/um</tt></dd></dl>
+ <dl><dt><a name="-s2n"><strong>s2n</strong></a>(ron, fe, dark, h_s, sig, flux, sky, x)</dt><dd><tt>Calculates&nbsp;the&nbsp;S/N&nbsp;per&nbsp;pixel&nbsp;of&nbsp;a&nbsp;profile&nbsp;fit&nbsp;along&nbsp;the&nbsp;slit.<br>
+&nbsp;<br>
+:param&nbsp;ron:&nbsp;Readout&nbsp;noise&nbsp;in&nbsp;electrons&nbsp;per&nbsp;pixel.<br>
+:param&nbsp;fe:&nbsp;Fractional&nbsp;flat-field&nbsp;error.<br>
+:param&nbsp;dark:&nbsp;Dark&nbsp;current&nbsp;in&nbsp;electrons&nbsp;per&nbsp;pixel.<br>
+:param&nbsp;h_s:&nbsp;&lt;exp&nbsp;scale&nbsp;length&gt;&nbsp;/&nbsp;&lt;Gaussian&nbsp;sigma&gt;<br>
+:param&nbsp;sig:&nbsp;Sigma&nbsp;of&nbsp;the&nbsp;Gaussian&nbsp;seeing&nbsp;core&nbsp;in&nbsp;pixels.<br>
+:param&nbsp;flux:&nbsp;Flux&nbsp;in&nbsp;electrons&nbsp;per&nbsp;exposure&nbsp;time.<br>
+:param&nbsp;sky:&nbsp;Sky&nbsp;flux&nbsp;in&nbsp;electrons&nbsp;per&nbsp;pixel&nbsp;per&nbsp;exp&nbsp;time.<br>
+:return:&nbsp;S/N&nbsp;per&nbsp;pixel&nbsp;along&nbsp;dispersion&nbsp;direction.</tt></dd></dl>
+ <dl><dt><a name="-skycont_at_ir"><strong>skycont_at_ir</strong></a>(lambd)</dt><dd><tt>Calculates&nbsp;the&nbsp;near&nbsp;infrafred&nbsp;continuum&nbsp;between&nbsp;the<br>
+OH&nbsp;lines,&nbsp;as&nbsp;defined&nbsp;by&nbsp;values&nbsp;in&nbsp;J&nbsp;at&nbsp;1.25&nbsp;um<br>
+and&nbsp;in&nbsp;H&nbsp;at&nbsp;1.67&nbsp;um.&nbsp;A&nbsp;linerat&nbsp;interpolation&nbsp;in&nbsp;<br>
+ln(photon_flux)&nbsp;-&nbsp;ln(lambda)&nbsp;is&nbsp;done.<br>
+The&nbsp;photon&nbsp;flux&nbsp;is&nbsp;given&nbsp;in&nbsp;ph/s/m^2/um/arcsec^2.<br>
+&nbsp;<br>
+:param&nbsp;lambd:&nbsp;The&nbsp;given&nbsp;wavelengths&nbsp;in&nbsp;um<br>
+:return:&nbsp;Specific&nbsp;photon&nbsp;flux&nbsp;at&nbsp;lambda.</tt></dd></dl>
+ <dl><dt><a name="-skyem_at_vis_ir_and_uvb"><strong>skyem_at_vis_ir_and_uvb</strong></a>(type, sigma, lambd)</dt><dd><tt>Calculates&nbsp;the&nbsp;specific&nbsp;photon&nbsp;flux&nbsp;from&nbsp;the&nbsp;night<br>
+sky&nbsp;at&nbsp;a&nbsp;given&nbsp;wavelength&nbsp;in&nbsp;the&nbsp;VIS/IR/UVB&nbsp;region<br>
+with&nbsp;given&nbsp;spectral&nbsp;resolution,&nbsp;as&nbsp;specified&nbsp;by&nbsp;a<br>
+Gaussian&nbsp;sigma.&nbsp;And&nbsp;airmass&nbsp;of&nbsp;1.2&nbsp;is&nbsp;assumed.<br>
+&nbsp;<br>
+:param&nbsp;type:&nbsp;String&nbsp;that&nbsp;determines&nbsp;if&nbsp;VIS/IR/UVB&nbsp;is&nbsp;used<br>
+:param&nbsp;sigma:&nbsp;The&nbsp;sky&nbsp;spectrum,&nbsp;as&nbsp;transmitted<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;through&nbsp;the&nbsp;dispersion&nbsp;sigma[i]&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;lambda[i].<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;sigmas&nbsp;are&nbsp;given&nbsp;in&nbsp;um.<br>
+:param&nbsp;lambd:&nbsp;The&nbsp;wavelengths&nbsp;given&nbsp;in&nbsp;um.<br>
+:return:&nbsp;Specific&nbsp;photon&nbsp;flux&nbsp;at&nbsp;lambd<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;given&nbsp;in&nbsp;units&nbsp;of&nbsp;photons/m^2/s/um/arcsec^2.</tt></dd></dl>
+ <dl><dt><a name="-snc_at_vis_ir_and_uvb"><strong>snc_at_vis_ir_and_uvb</strong></a>(type, nexp, etime, func, abmag, maglam, param, lambd)</dt><dd><tt>Calculates&nbsp;the&nbsp;signal-to-noise&nbsp;(per&nbsp;pixel)&nbsp;for&nbsp;a&nbsp;range<br>
+of&nbsp;given&nbsp;wavelengths&nbsp;for&nbsp;an&nbsp;arm.<br>
+&nbsp;<br>
+:param&nbsp;type:&nbsp;Which&nbsp;arm&nbsp;is&nbsp;wanted&nbsp;to&nbsp;use.<br>
+:param&nbsp;nexp:&nbsp;Number&nbsp;of&nbsp;single&nbsp;exposures.<br>
+:param&nbsp;etime:&nbsp;Exposure&nbsp;time&nbsp;in&nbsp;s.<br>
+:param&nbsp;func:&nbsp;Which&nbsp;spectral&nbsp;law&nbsp;is&nbsp;wanted.<br>
+:param&nbsp;abmag:&nbsp;AB&nbsp;magnitude&nbsp;at&nbsp;specified&nbsp;wavelength.<br>
+:param&nbsp;maglam:&nbsp;Wavelength&nbsp;(in&nbsp;um)&nbsp;where&nbsp;abmag&nbsp;is&nbsp;given.<br>
+:param&nbsp;param:&nbsp;Spectral&nbsp;index&nbsp;(alpha)&nbsp;or&nbsp;temperature.<br>
+:param&nbsp;lambd:&nbsp;The&nbsp;given&nbsp;wavelengths&nbsp;in&nbsp;um.<br>
+:return:&nbsp;The&nbsp;Signal-to-Noise&nbsp;per&nbsp;pixel.</tt></dd></dl>
+ <dl><dt><a name="-template"><strong>template</strong></a>(abmag, maglam, bandwidth, lambd)</dt><dd><tt>Calculates&nbsp;a&nbsp;template&nbsp;spectrum&nbsp;with&nbsp;an&nbsp;AB&nbsp;magnitude<br>
+abmag&nbsp;at&nbsp;central&nbsp;wavelength&nbsp;maglam&nbsp;through&nbsp;a&nbsp;photometric<br>
+system&nbsp;with&nbsp;a&nbsp;FWHM&nbsp;bandpass&nbsp;of&nbsp;banwidth.<br>
+All&nbsp;wavelength&nbsp;are&nbsp;given&nbsp;in&nbsp;um,&nbsp;and&nbsp;the&nbsp;photon&nbsp;flux<br>
+density&nbsp;is&nbsp;given&nbsp;in&nbsp;photons/s/m^2/um.<br>
+&nbsp;<br>
+:param&nbsp;abmag:&nbsp;AB&nbsp;magnitude&nbsp;in&nbsp;specified&nbsp;photometric&nbsp;system.<br>
+:param&nbsp;maglam:&nbsp;Central&nbsp;wavelength&nbsp;(in&nbsp;um)&nbsp;of&nbsp;the&nbsp;bandpass.<br>
+:param&nbsp;bandwidth:&nbsp;FWHM&nbsp;(in&nbsp;um)&nbsp;of&nbsp;the&nbsp;photometrix&nbsp;system.<br>
+:param&nbsp;lambd:&nbsp;The&nbsp;wavelengths&nbsp;given&nbsp;in&nbsp;um.<br>
+:return:&nbsp;Specific&nbsp;photon&nbsp;flux&nbsp;at&nbsp;lambd&nbsp;given&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;units&nbsp;photons/s/m^2/um.</tt></dd></dl>
+ <dl><dt><a name="-thermalem_at_ir"><strong>thermalem_at_ir</strong></a>(lambd)</dt><dd><tt>Calculates&nbsp;the&nbsp;near&nbsp;infrared&nbsp;thermal&nbsp;continuum.<br>
+A&nbsp;tempertaure&nbsp;of&nbsp;T&nbsp;=&nbsp;288K&nbsp;and&nbsp;an&nbsp;emissivity&nbsp;of<br>
+emis&nbsp;=&nbsp;0.25&nbsp;are&nbsp;assumed.&nbsp;The&nbsp;photon&nbsp;flux&nbsp;is<br>
+given&nbsp;in&nbsp;ph/s/m^2/um/arcsec^2.<br>
+&nbsp;<br>
+:param&nbsp;lambd:&nbsp;The&nbsp;given&nbsp;wavelenghts&nbsp;in&nbsp;um.<br>
+:return:&nbsp;Specific&nbsp;photon&nbsp;flux&nbsp;at&nbsp;lambda.</tt></dd></dl>
+ <dl><dt><a name="-y_spls"><strong>y_spls</strong></a>(type)</dt><dd><tt>This&nbsp;functions&nbsp;makes&nbsp;interpolations&nbsp;of&nbsp;the&nbsp;data&nbsp;needed&nbsp;for<br>
+the&nbsp;given&nbsp;range.<br>
+&nbsp;<br>
+No&nbsp;input&nbsp;or&nbsp;output:<br>
+It&nbsp;takes&nbsp;makes&nbsp;the&nbsp;interpolations&nbsp;as&nbsp;globals.</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>erf</strong> = &lt;ufunc 'erf'&gt;</td></tr></table>
+</body></html>

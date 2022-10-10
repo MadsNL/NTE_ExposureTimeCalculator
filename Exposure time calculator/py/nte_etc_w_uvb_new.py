@@ -1,3 +1,13 @@
+"""
+Original code was written by Bjarne Thomsen.
+
+Translated and additional code written by Cecilie Valet Henneberg and Mads Nymann-Lynggaard
+
+Comments also written by Bjarne Thomsen.
+"""
+
+
+
 # This is a translation of code originally by Bjarne Thomsen
 
 import numpy as np
@@ -9,12 +19,37 @@ from scipy.special import erf
 np.random.seed(32)
 
 def gauss (x):
+    """
+    Caclulate the normalized Gaussian function for the array x.
+
+    :param x: array of values. In this code x is used as (arr - arr0)/sigma)
+    :return: The values of the Gaussian.
+    """
     return np.exp(-0.5 * x**2)/np.sqrt(2.0 * np.pi)
 
 def hgauss (x,s):
+    """
+    Generates a semi-realistic object profile along the slit.
+    hgauss(x, s) = exp(-(sqrt(1 + (x*s)^2) - 1)/x^2)
+                 = exp(-2.0*(sinh(0.5*asinh(x*s))/x)^2)
+    This is a simple way to obtain a profile resembling a disk galaxy
+    convolved by a Gaussian seeing.
+
+    :param x: Exponential scale divided by Gaussian sigma.
+    :param s: Distance from center of slit in sigma units.
+    :return: Signal profile along the slit.
+    """
     return np.exp(-2.0*(np.sinh(0.5 * asinh(x*s))/x)**2)
 
 def asinh (x):
+    """
+    Calculates the inverse of the hyperbolic sine function.
+    asinh(x) = sign(x)*asinh(abs(x))
+    asinh(x) = alog(sqrt(1 + x^2) + x)
+
+    :param x: Real scalar or array.
+    :return: Inverse of the hyperbolic sine function.
+    """
     # use that asinh(x) = sign(x)*asinh(abs(x))
     z = abs(x)
     # calculate asinh(x) for positive arguments, only
@@ -24,10 +59,37 @@ def asinh (x):
     x[j] = -np.log(np.sqrt(z[j]**2 + 1) + z[j])
     return x
 
-def planck (x, T):
+def planck(x, T):
+    """
+    Calculates the specific photon flux from
+    a black body of themperature T kelvin.
+    It is given in ph/s/m^2/um/arcsec^2
+
+    :param x: The given wavelengths in um
+    :param T: Temperature in kelvin
+    :return: Specific photon flux at x
+    """
     return 1.40929e16/(np.exp(1.43879e4/(T*x)) - 1)/x**4
 
 def objem_at_all (func, abmag, maglam, param, sigma, lambd):
+    """
+    Calculates the specific photon flux from a selected
+    spectral law or template at a given wavelength with
+    given spectral resolution, as specified by a 
+    Gaussian sigma. And airmass of 1.2 is assumed.
+
+    :param func: String. The spectral law or template to use.
+    :param abmag: AB magnitude at specified wavelength
+    :param maglam: Wavelength (in um) where abmag is given.
+    :param param: Spectral index, temperature or bandwidth.
+    :param sigma: The sky spectrum, as transmitted through
+                  the atmosphere, is convolved with a 
+                  Gaussian having the dispersion sigma[i]
+                  at lambda[i]. The sigmas are given in um.
+    :param lambd: The wavelengths given in um.
+    :return: Specific photon flux at lambd given in
+             units photons/s/m^2/um.
+    """
     # Airmass
     am = 1.2
     # convolve the object spectrum with a Gaussian
@@ -59,6 +121,14 @@ def objem_at_all (func, abmag, maglam, param, sigma, lambd):
     return y
 
 def atmos_trans (lambd):
+    """
+    Calculates the atmospheric transmission at any
+    wavelength in the full range.
+    An airmass of 1.0 is assumed.
+
+    :param lambd: Wavelength in um.
+    :return: Atmospheric transmission.
+    """
     # Split between a UV-Visual part and a NIR part of the spectrum
     y = lambd.copy()
     k = lambd < lambda_split_uvb_vis
@@ -67,16 +137,38 @@ def atmos_trans (lambd):
     y[k] = dqes_and_intps('uvis', lambd[k], 'trans_at_uvis')
     k = lambd >= lambda_split_vis_ir
     y[k] = dqes_and_intps('nir', lambd[k], 'trans_at_nir')
-    #print(lambd)
     return y
 
 
-
 def powerlaw (abmag, maglam, alpha, lambd):
+    """
+    Calculates a power-law continuum with a spectral
+    index, alpha and an AB magnitude, abmag, at maglam.
+    The photon flux density is given in photons/s/m^2/um.
+
+    :param abmag: AB magnitude at specified wavelength
+    :param maglam: Wavelength (in um) where abmag is given.
+    :param alpha: Spectral index (F_nu ~ 1/nu^alpha).
+    :param lambd: The wavelengths given in um.
+    :return: Specific photon flux at lambd given in
+             units photons/s/m^2/um.
+    """
     y = (lambd/maglam)**alpha * 10**(0.4*(26.847 - abmag))/lambd
     return y
 
 def plancklaw (abmag, maglam, T, lambd):
+    """
+    Calculates a Planck-law continuum with temperature T,
+    and an AB magnitude, abmag, at maglam.
+    The photon flux density is given in ph/s/m^2/um.
+
+    :param abmag: AB magnitude at specified wavelength
+    :param maglam: Wavelength (in um) where abmag is given.
+    :param T: Temperature in kelvin
+    :param lambd: The wavelengths given in um.
+    :return: Specific photon flux at lambd given in
+             units photons/s/m^2/um.
+    """
     c2 = 14387.9
     a = 0.5*c2/T
     y = np.exp(a/maglam - a/lambd)*np.sinh(a/maglam)/np.sinh(a/lambd)* \
@@ -84,6 +176,20 @@ def plancklaw (abmag, maglam, T, lambd):
     return y
 
 def template (abmag, maglam, bandwidth, lambd):
+    """
+    Calculates a template spectrum with an AB magnitude
+    abmag at central wavelength maglam through a photometric
+    system with a FWHM bandpass of banwidth.
+    All wavelength are given in um, and the photon flux
+    density is given in photons/s/m^2/um.
+
+    :param abmag: AB magnitude in specified photometric system.
+    :param maglam: Central wavelength (in um) of the bandpass.
+    :param bandwidth: FWHM (in um) of the photometrix system.
+    :param lambd: The wavelengths given in um.
+    :return: Specific photon flux at lambd given in
+             units photons/s/m^2/um.
+    """
     n = len(template_x)
     x = template_x
     y = template_y
@@ -111,6 +217,18 @@ def template (abmag, maglam, bandwidth, lambd):
     return f
 
 def call_func (func, abmag, maglam, param, x):
+    """
+    Decides which function to use based on func string.
+
+    :param func: String with the name of the function to use.
+    :param abmag: AB magnitude at specified wavelength
+    :param maglam: Wavelength (in um) where abmag is given.
+    :param param: Spectral index, temperature or bandwidth.
+    :param x: The wavelengths given in um.
+    :return: Specific photon flux at x given in
+             units photons/s/m^2/um.
+             Based on specified function.
+    """
     if func == 'powerlaw':
         f = powerlaw(abmag, maglam, param, x)
     elif func == 'placklaw':
@@ -120,6 +238,15 @@ def call_func (func, abmag, maglam, param, x):
     return f
 
 def read_vis_sky ():
+    """
+    This function imports the needed data of the night-sky
+    in the visual part of the spectrum.
+
+    No input and no output.
+    It puts the data in the global variables:
+    - vissky_x - wavelengths in um
+    - vissky_y - specific photon flux in photons/s/m^2/um
+    """
     global vissky_x, vissky_y
     sky_data = np.loadtxt('data/VIS-sky.dat')
     # extract wavelengths into um
@@ -131,6 +258,14 @@ def read_vis_sky ():
     #vissky_y = np.ones(len(vissky_y))*np.mean(vissky_y) #WARNING!!!
 
 def read_nir_abs ():
+    """
+    Reads data on atmospheric NIR absorption.
+
+    No input and no output.
+    It puts the data in the global variables:
+    - nir_x - wavelengths in um
+    - nir_y - transmission
+    """
     global nir_x, nir_y
     abs_data = np.loadtxt('data/NIR-abs.dat') #2.dat')
     # extract wavelengths (in um) and transmissions.
@@ -140,7 +275,15 @@ def read_nir_abs ():
     nir_y = nir_y.clip(min=1.0e-6, max=1.0)
 
 def read_uvis_ext ():
-    global uvis_x, uvis_y, uvis_y2
+    """
+    Reads data on atmospheric UV/Vis extinction.
+
+    No input and no output.
+    It puts the data in the global variables:
+    - uvis_x - wavelengths in um
+    - uvis_y - transmissions
+    """
+    global uvis_x, uvis_y #, uvis_y2
     ext_data = np.loadtxt('data/UVIS-ext.dat')#2.dat')
     # extract wavelength (in um) and transmission of the atmosphere.
     uvis_x = ext_data[:,0] /1000.0
@@ -151,6 +294,14 @@ def read_uvis_ext ():
     # uvis_y2 = y_spl_2d(uvis_x)
 
 def read_vis_dqe ():
+    """
+    Reads data on efficiency of NTE in VIS.
+
+    No input and no output.
+    It puts the data in the global variables:
+    - vis_x - wavelengths in um
+    - vis_y - efficiency
+    """
     global vis_x, vis_y, vis_y2
     dqe_data = np.loadtxt('data/NTE_eff.dat')
     # extract wavelength (in um) and DQE of VIS arm of X-Shooter.
@@ -164,6 +315,14 @@ def read_vis_dqe ():
     # vis_y2 = y_spl_2d(vis_x)
 
 def read_oh ():
+    """
+    Reads data on OH lines.
+
+    No input and no output.
+    It puts the data in the global variables:
+    - oh_x - wavelengths in um
+    - oh_y - line strengths in ph/m^2/s/arcsec^2
+    """
     global oh_x, oh_y
     oh_data = np.loadtxt('data/OH-lines.dat')
     # convert wavelengths to um.
@@ -177,6 +336,14 @@ def read_oh ():
     #oh_y = np.ones(len(oh_y))*np.mean(oh_y) #WARNING!!!!
 
 def read_ir_dqe ():
+    """
+    Reads efficiency of NTE in IR.
+
+    No input and no output.
+    It puts the data in the global variables:
+    - ir_x - wavelengths in um
+    - ir_y - efficiency
+    """
     global ir_x, ir_y, ir_y2
     dqe_data = np.loadtxt('data/NTE_eff.dat')
     # extract wavelength (in um) and DQE of IR arm of X-Shooter.
@@ -190,6 +357,14 @@ def read_ir_dqe ():
     # ir_y2 = y_spl_2d(ir_x)
 
 def read_uvb_sky ():
+    """
+    Reads data on uvb night-sky emissions.
+
+    No input and no output.
+    It puts the data in the global variables:
+    - uvbsky_x - wavelengths in um
+    - uvbsky_y - photon fluxes in ph/m^2/s/um/arcsec^2
+    """
     global uvbsky_x, uvbsky_y
     sky_data = np.loadtxt('data/UVB-sky.dat')
     #  extract wavelength in um
@@ -201,6 +376,14 @@ def read_uvb_sky ():
     #uvbsky_y = np.ones(len(uvbsky_y))*np.mean(uvbsky_y) #WARNING!!!!
 
 def read_uvb_dqe ():
+    """
+    Reads NTE efficiency in uvb range.
+
+    No input and no output.
+    It puts the data in the global variables:
+    - uvb_x - wavelengths in um
+    - uvb_y - efficiency
+    """
     global uvb_x, uvb_y, uvb_y2
     dqe_data = np.loadtxt('data/NTE_eff.dat')
     # extract wavelength (in um) and DQE of UVB arm of X-Shooter
@@ -216,7 +399,15 @@ def read_uvb_dqe ():
 
     
 
-def read_luvb_tmp ():
+def read_luvb_tmp (): # TODO vi bruger ikke dens interpolation til noget???????
+    """
+    Reads uvb extinction data.
+
+    No input and no output.
+    It puts the data in the global variables:
+    - luvb_x - wavelengths in um
+    - luvb_y - extinction
+    """
     global luvb_x, luvb_y, luvb_y2
     luvb_data = np.loadtxt('data/LUVB-ext.dat') #2.dat')
     # extract wavelength (in um) and transmission of the atmosphere.
@@ -228,6 +419,18 @@ def read_luvb_tmp ():
     # luvb_y2 = y_spl_2d(luvb_x)
 
 def init_snc_at_vis_ir_and_uvb (type, slit_width, disk_scale, psf_fwhm , bin_w=0, bin_l=0):
+    """
+    Decides which data to read give the type
+
+    :param type: Which part of the spectrum is used
+    :param slit_width: The width of the slit in arcsec
+    :param disk_scale: The exponential scale of the disk in arcsec
+    :param psf_fwhm: The FWHM of the Gaussian PSF in arcsec
+
+    No output. It just reads data into the globals.
+    Also depending on :param type: it will read different
+    constants into the globals.
+    """
     if type == 'vis':
         # read night sky emission data
         read_vis_sky()
@@ -275,6 +478,14 @@ def init_snc_at_vis_ir_and_uvb (type, slit_width, disk_scale, psf_fwhm , bin_w=0
 #init_snc_at_vis(1,1,1,1,1)
 
 def disp_at_vis_ir_and_uvb (type, x):
+    """
+    Calculates the spectral dispersion in arcsec/um
+    at any given wavelength for any arm.
+
+    :param type: Which part of the spectrum is used
+    :param x: The wavelength in um
+    :return: The dispersion in arcsec/um
+    """
     if type == 'vis':
         r = 4000.0
     elif type == 'ir':
@@ -285,6 +496,15 @@ def disp_at_vis_ir_and_uvb (type, x):
 
 
 def lamgen_at_vis_ir_and_uvb (type, lambda_min, lambda_max):
+    """
+    Generates an array of wavelengths.
+
+    :param type: Which part of the spectrum is used
+    :param lambda_min: The minimum wavelength in um
+    :param lambda_max: The maximum wavelength in um
+    :return: An array of wavelengths in um.
+             Wavelength array is on a logarithmix scale.
+    """
     # the middle wavelength on a logarithmic scale
     lambda0 = np.sqrt(lambda_min * lambda_max)
     # size of a pixel in wavelength units at lambda0
@@ -299,9 +519,15 @@ def lamgen_at_vis_ir_and_uvb (type, lambda_min, lambda_max):
     x = x_min * ratio**x
     return x
 
-#lamgen_at_vis(0.1,1,1)
 
 def y_spls (type):
+    """
+    This functions makes interpolations of the data needed for
+    the given range.
+
+    No input or output:
+    It takes makes the interpolations as globals.
+    """
     global y_spl_vis, y_spl_nir, y_spl_uvis, y_spl_vissky, y_spl_ir, y_spl_uvb, y_spl_uvbsky, y_spl_luvb
     if type == 'vis':
         y_spl_vis = UnivariateSpline(vis_x, vis_y, s=0, k=3)
@@ -324,6 +550,16 @@ def y_spls (type):
 
 
 def dqes_and_intps (name, lambd, t):
+    """
+    Collective function for evaluation the interpolation.
+
+    :param name: What part of the spectrum is used.
+    :param lambd: The given wavelength range in um.
+    :param t: The type of interpolation. (Needed because 
+              additional processing might be needed for
+              specific interpolations)
+    :return: The interpolated values at lambd.
+    """
     x_name = globals()[name + '_x']
     y_name = globals()['y_spl_' + name]
     x = np.array([min(max(l, x_name[0]), x_name[-1]) for l in lambd])
@@ -340,6 +576,16 @@ def dqes_and_intps (name, lambd, t):
     return y
 
 def skycont_at_ir (lambd):
+    """
+    Calculates the near infrafred continuum between the
+    OH lines, as defined by values in J at 1.25 um
+    and in H at 1.67 um. A linerat interpolation in 
+    ln(photon_flux) - ln(lambda) is done.
+    The photon flux is given in ph/s/m^2/um/arcsec^2.
+
+    :param lambd: The given wavelengths in um
+    :return: Specific photon flux at lambda.
+    """
     lamb_J = 1.25
     flux_J = 310.0
     lamb_H = 1.665
@@ -352,6 +598,15 @@ def skycont_at_ir (lambd):
     return y
 
 def thermalem_at_ir (lambd):
+    """
+    Calculates the near infrared thermal continuum.
+    A tempertaure of T = 288K and an emissivity of
+    emis = 0.25 are assumed. The photon flux is
+    given in ph/s/m^2/um/arcsec^2.
+
+    :param lambd: The given wavelenghts in um.
+    :return: Specific photon flux at lambda.
+    """
     Temp = 288.0
     emis = 0.25
     x = lambd
@@ -359,6 +614,21 @@ def thermalem_at_ir (lambd):
     return y
 
 def skyem_at_vis_ir_and_uvb (type, sigma, lambd):
+    """
+    Calculates the specific photon flux from the night
+    sky at a given wavelength in the VIS/IR/UVB region
+    with given spectral resolution, as specified by a
+    Gaussian sigma. And airmass of 1.2 is assumed.
+
+    :param type: String that determines if VIS/IR/UVB is used
+    :param sigma: The sky spectrum, as transmitted
+                  through the dispersion sigma[i] 
+                  at lambda[i].
+                  The sigmas are given in um.
+    :param lambd: The wavelengths given in um.
+    :return: Specific photon flux at lambd
+             given in units of photons/m^2/s/um/arcsec^2.
+    """
     # Airmass
     am = 1.2
     if type == 'vis':
@@ -411,6 +681,18 @@ def skyem_at_vis_ir_and_uvb (type, sigma, lambd):
     return y
 
 def s2n (ron, fe, dark, h_s, sig, flux, sky, x):
+    """
+    Calculates the S/N per pixel of a profile fit along the slit.
+
+    :param ron: Readout noise in electrons per pixel.
+    :param fe: Fractional flat-field error.
+    :param dark: Dark current in electrons per pixel.
+    :param h_s: <exp scale length> / <Gaussian sigma>
+    :param sig: Sigma of the Gaussian seeing core in pixels.
+    :param flux: Flux in electrons per exposure time.
+    :param sky: Sky flux in electrons per pixel per exp time.
+    :return: S/N per pixel along dispersion direction.
+    """
     # calculate the object profile
     P = hgauss(h_s, x/sig)
     # normalize the profile sum to 1.0
@@ -428,6 +710,20 @@ def s2n (ron, fe, dark, h_s, sig, flux, sky, x):
 
 
 def snc_at_vis_ir_and_uvb(type, nexp, etime, func, abmag, maglam, param, lambd):
+    """
+    Calculates the signal-to-noise (per pixel) for a range
+    of given wavelengths for an arm.
+
+    :param type: Which arm is wanted to use.
+    :param nexp: Number of single exposures.
+    :param etime: Exposure time in s.
+    :param func: Which spectral law is wanted.
+    :param abmag: AB magnitude at specified wavelength.
+    :param maglam: Wavelength (in um) where abmag is given.
+    :param param: Spectral index (alpha) or temperature.
+    :param lambd: The given wavelengths in um.
+    :return: The Signal-to-Noise per pixel.
+    """
     # number of wavelength points
     Npts = len(lambd)
     # Gaussian sigmas in wavelength space corresponding to the given slit width
@@ -476,11 +772,6 @@ def snc_at_vis_ir_and_uvb(type, nexp, etime, func, abmag, maglam, param, lambd):
         #y[i,1] = (1.0 + 0.1 / y[i,0]) * float(nexp) * objem[i]
     #print(y)
     return y
-
-
-#snc_at_vis(1,1,'template',1,1,1,np.array([1,2,3]),1,1,1,1,np.array([1,2,3]),np.array([1,2,3]),np.array([1,2,3]),np.array([1,2,3]),np.array([1,2,3]),np.array([1,2,3]),1,np.array([1,2,3]),np.array([1,2,3]),np.array([1,2,3]),np.array([1,2,3]), 1, 1, 1, 1, 1, 1)
-
-
 
 
 if __name__ == '__main__':
